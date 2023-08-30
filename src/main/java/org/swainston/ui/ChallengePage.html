@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta charset="utf-8">
+    <title>GCSE AOC!</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css"
+          title="Stylesheet"/>
+
+    <script src="https://kit.fontawesome.com/79cfa1bf9a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="navbar">
+    <a id="home" wicket:id="go-home"><i class="fa fa-home"></i></a>
+    <a id="signout" wicket:id="sign-out"><i class="fa fa-user"></i></a>
+    <a id="settings"><i class="fa fa-gear"></i></a>
+</div>
+
+<div class="main">
+    <div id="left">
+        <div id="title">
+            <h1><wicket:label wicket:id="title">Title</wicket:label></h1>
+        </div>
+
+        <div id="instructions">
+            <wicket:label wicket:id="instructions">Instructions</wicket:label>
+        </div>
+
+        <div id="language">
+            <select name="language" id="language">
+                <option value="java">Java</option>
+                <option value="python" disabled>Python</option>
+                <option value="c" disabled>C</option>
+                <option value="none" selected disabled>Select a language</option>
+            </select>
+        </div>
+
+        <form wicket:id="form-submit-code">
+        <div id="input">
+            <textarea id="w3review" wicket:id="textarea-code" name="w3review" rows="21" cols="65"></textarea>
+        </div>
+            <input type="submit" value="Submit"/>
+        </form>
+
+    </div>
+
+
+
+
+    <div id="right">
+        <div id="status">
+            <h1>PASS</h1>
+        </div>
+
+        <div id="testdata">
+            <h3>Sample data</h3>
+            <p><br><br>
+
+                Input #1: A <br><br>
+                Input #2: B <br><br>
+                Input #3: C</p>
+        </div>
+
+        <div id="dataoutput">
+            <h3>Your output</h3>
+            <p><br><br>X <br><br>Y <br><br>Z</p>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

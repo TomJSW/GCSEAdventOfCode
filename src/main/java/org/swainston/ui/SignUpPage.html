@@ -1,0 +1,39 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta charset="utf-8">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css"
+          title="Stylesheet"/>
+    <script src="https://kit.fontawesome.com/79cfa1bf9a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="navbar">
+    <a id="home" wicket:id="go-home"><i class="fa fa-home"></i></a>
+    <a id="signout" wicket:id="sign-out"><i class="fa fa-user"></i></a>
+    <a id="settings"><i class="fa fa-gear"></i></a>
+</div>
+
+
+<div class="main">
+
+    <h1>Sign up</h1>
+
+    <span wicket:id="feedback"/>
+    <p>Create a login.</p>
+
+    <form wicket:id="signUpForm">
+        <dl>
+            <dt>Email:</dt>
+            <dd><input wicket:id="username" type="text" size="30"/></dd>
+            <dt>Password:</dt>
+            <dd><input wicket:id="password" type="password" size="30"/></dd>
+            <dd>
+                <input type="submit" wicket:id="signUpFormSubmit" name="submit" value="Sign Up"/>
+            </dd>
+        </dl>
+    </form>
+</div>
+</body>
+</html>
