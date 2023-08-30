@@ -1,0 +1,53 @@
+body {
+    background: #0f0f23;
+    font-family: "Source Code Pro", monospace;
+    color: #ddd;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #009900;
+    border-radius: 15px;
+}
+
+.navbar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.navbar a:hover {
+    color: black;
+    background-color: #ddd;
+}
+
+.navbar a#signout {
+    float: right;
+}
+
+.navbar a#settings {
+    float: right;
+}
+
+.main {
+    text-align: center;
+}
+
+.main p {
+    width: 50%;
+    margin: auto;
+}
+
+.p a {
+    color: white;
+}
+
+a:-webkit-any-link {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: center;
+}
