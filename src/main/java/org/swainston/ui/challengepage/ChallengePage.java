@@ -1,4 +1,4 @@
-package org.swainston.ui;
+package org.swainston.ui.challengepage;
 
 import java.util.Optional;
 import org.apache.wicket.markup.html.WebPage;
@@ -10,6 +10,7 @@ import org.opentest4j.AssertionFailedError;
 import org.swainston.*;
 import org.swainston.database.MySQLAttemptsStore;
 import org.swainston.database.MySQLChallengeStore;
+import org.swainston.ui.homepage.HomePage;
 
 /**
  * This class handles the challenge page and the submitted in the challenge page.

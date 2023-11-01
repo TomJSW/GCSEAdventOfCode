@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css"
           title="Stylesheet"/>
+    <link rel="icon" href="xmas_tree.png">
     <script src="https://kit.fontawesome.com/79cfa1bf9a.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,22 +17,21 @@
 </div>
 
 
-<div class="main">
+<div class="main" >
 
-    <h1>Sign up</h1>
+    <h1>Sign in</h1>
 
-    <span wicket:id="feedback"/>
-    <p>Create a login.</p>
+    <p>
+        Please log in, or <a wicket:id="signUpLink">create a login</a> if you don't already have one.
+    </p>
 
-    <form wicket:id="signUpForm">
+    <form wicket:id="signInForm">
         <dl>
-            <dt>Email:</dt>
-            <dd><input wicket:id="username" type="text" size="30"/></dd>
+            <dt>Username:</dt>
+            <dd><input type="text" wicket:id="username" size="30"/></dd>
             <dt>Password:</dt>
-            <dd><input wicket:id="password" type="password" size="30"/></dd>
-            <dd>
-                <input type="submit" wicket:id="signUpFormSubmit" name="submit" value="Sign Up"/>
-            </dd>
+            <dd><input type="password" wicket:id="password" size="30"/></dd>
+            <dd><input type="submit" wicket:id="signInFormSubmit" name="submit" value="Sign In"/></dd>
         </dl>
     </form>
 </div>

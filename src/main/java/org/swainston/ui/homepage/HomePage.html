@@ -6,16 +6,18 @@
     <meta charset="utf-8">
     <title>GCSE AOC!</title>
     <link rel="stylesheet" href="style.css" type="text/css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-              type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="icon" href="xmas_tree.png">
 </wicket:head>
 
 <body>
 
 <div class="navbar">
     <a id="home"><i class="fa fa-home"></i></a>
-    <a id="signout"><i class="fa fa-user"></i></a>
-    <a id="settings"><i class="fa fa-gear" ></i></a>
+    <a wicket:id="signIn" id="signout"><i class="fa fa-user"></i></a>
+    <a id="settings"><i class="fa fa-gear"></i></a>
 
     <!--
         <a id="signout"><i class="fa-solid fa-user"></i></a>
@@ -26,16 +28,14 @@
 <div class="main">
     <h1>GCSE Advent Of Code</h1>
     <h3>An A Level project developed by Tom Swainston</h3>
-    <p>Within this website are a set of mixed difficulty coding challenges that cover all aspects of the coding side
-        of your OCR GCSE computer science qualification. Although there are no speccific tests or projects to
-        examine your coding skills, there are questions that may appear on your paper that require basic coding
-        knowledge to be able to answer and gain full marks.</p>
-
-    <br/>
-    <p>
-        <a wicket:id="challengePageLink">Go to the challenges</a>
-    </p>
-
+    <p>Within this website are a set of mixed difficulty coding challenges that
+        cover all aspects of the coding side
+        of your OCR GCSE computer science qualification. Although there are no
+        specific tests or projects to
+        examine your coding skills, there are questions that may appear on your
+        paper that require basic coding
+        knowledge to be able to answer and gain full marks.</p> <br/>
+    <p><a wicket:id="challengePageLink">Go to the challenges</a></p>
 </div>
 
 </body>

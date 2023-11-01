@@ -1,4 +1,4 @@
-package org.swainston.ui;
+package org.swainston.ui.signin;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
@@ -6,48 +6,68 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
 import org.swainston.SignInSession;
+import org.swainston.ui.signup.SignUpPage;
+import org.swainston.ui.homepage.HomePage;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Class containing scripting for the sign in page
+ */
 public class SignInPage extends WebPage {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructing method that is run to load the active components of the page
+     * @param parameters page parameters, required for super class
+     */
     public SignInPage(final PageParameters parameters) {
         super(parameters);
+
+        // Form used for taking users credentials
         add(new SignInForm("signInForm"));
-        add(new FeedbackPanel("feedback"));
+
+        // Component that links users to create a login
         add(new Link<Void>("signUpLink") {
             public void onClick() {
                 setResponsePage(SignUpPage.class);
             }
         });
 
-        add(new Link<String>("go-home", (IModel) () -> "foo") {
+        // Navigation bar home button
+        add(new Link<Void>("go-home") {
+            public void onClick() {
+                setResponsePage(HomePage.class);
+            }
+        });
+
+        // REDUNDANT, REDIRECTS TO HOMEPAGE, SAME AS ABOVE+
+        add(new Link<Void>("sign-out") {
             @Override
             public void onClick() {
                 setResponsePage(HomePage.class);
             }
         });
-        add(new Link<String>("sign-out", (IModel) () -> "foo") {
-            @Override
-            public void onClick() {
-//                getMySession().signOut();
-                setResponsePage(HomePage.class);
-            }
-        });
-        // TODO Add your page's components here
     }
 
-    public final class SignInForm extends Form<Void> {
+    /**
+     * Class required to create the form that takes the users credentials
+     */
+    private static final class SignInForm extends Form<Void> {
         private static final String USERNAME = "username";
         private static final String PASSWORD = "password";
 
-        private final ValueMap properties = new ValueMap();
+        private final Map<String, String> properties = new HashMap<>();
 
+        /**
+         * Method that creates and handles the data given within the form
+         * @param id the wicket:id of the HTML component
+         */
         public SignInForm(final String id) {
             super(id);
 
@@ -57,30 +77,30 @@ public class SignInPage extends WebPage {
         }
 
         @Override
-        public final void onSubmit() {
+        public void onSubmit() {
 
             // Get session info for the user
-            SignInSession session = getMySession();
+            var signInSession = getMySession();
 
             // Sign the user in and proceed to the original page that was the destination before
             // flow was interrupted by this login action.
-            if (session.signIn(getUsername(), getPassword())) {
+            if (signInSession.signIn(getUsername(), getPassword())) {
                 continueToOriginalDestination();
             } else {
                 // Get the error message from the properties file associated with the Component
-                String errmsg = getString("loginError", null, "Sign in details not recognised.");
+                String loginError = getString("loginError", null, "Sign in details not recognised.");
 
                 // Register the error message with the feedback panel
-                error(errmsg);
+                error(loginError);
             }
         }
 
         private String getPassword() {
-            return properties.getString(PASSWORD);
+            return properties.get(PASSWORD);
         }
 
         private String getUsername() {
-            return properties.getString(USERNAME);
+            return properties.get(USERNAME);
         }
 
         private SignInSession getMySession() {
