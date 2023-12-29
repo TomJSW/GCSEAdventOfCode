@@ -7,3 +7,4 @@ public interface CredentialsStore {
 
   boolean validate(String email, String password);
 }
+

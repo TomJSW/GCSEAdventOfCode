@@ -1,7 +1,7 @@
 body {
     background: #0f0f23;
     font-family: "Source Code Pro", monospace;
-    color: #ddd;
+    color: #cccccc;
 }
 
 .navbar {
@@ -21,7 +21,7 @@ body {
 
 .navbar a:hover {
     color: black;
-    background-color: #ddd;
+    background-color: white;
 }
 
 .navbar a#signout {
@@ -42,7 +42,7 @@ body {
 }
 
 .p a {
-    color: white;
+    color: #cccccc;
 }
 
 a:-webkit-any-link {

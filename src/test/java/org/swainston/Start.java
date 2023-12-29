@@ -1,13 +1,13 @@
 package org.swainston;
 
 import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import javax.management.MBeanServer;
-import javax.sql.DataSource;
 import java.lang.management.ManagementFactory;
 
 /**
@@ -15,60 +15,34 @@ import java.lang.management.ManagementFactory;
  * -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect with jconsole).
  */
 public class Start {
+
   /**
-   * Main function, starts the jetty server.
-   *
-   * @param args
+   * Main function for the Wicket Application host
    */
-
-  private static DataSource DATASOURCE;
-
   public static void main(String[] args) {
+    // Assigned system property - can be retrieved using System.getProperty("wicket.configuration")
     System.setProperty("wicket.configuration", "development");
 
     Server server = new Server();
 
-    HttpConfiguration http_config = new HttpConfiguration();
-    http_config.setSecureScheme("https");
-    http_config.setSecurePort(8443);
-    http_config.setOutputBufferSize(32768);
+    HttpConfiguration httpConfiguration = new HttpConfiguration();
+    httpConfiguration.setSecureScheme("https");
+    httpConfiguration.setSecurePort(8443);
+    httpConfiguration.setOutputBufferSize(32768);
 
-    ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
-    http.setPort(8080);
-    http.setIdleTimeout(1000 * 60 * 60);
+    ServerConnector connector = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration));
+    // Sets the port for the server to run on
+    connector.setPort(8080);
+    connector.setIdleTimeout(1000 * 60 * 60);
 
-    server.addConnector(http);
+    server.addConnector(connector);
 
-    Resource keystore = Resource.newClassPathResource("/keystore.p12");
-    if (keystore != null && keystore.exists()) {
-      // if a keystore for a SSL certificate is available, start a SSL
+    WebAppContext webAppContext = new WebAppContext();
+    webAppContext.setServer(server);
+    webAppContext.setContextPath("/");
+    webAppContext.setWar("src/main/webapp");
 
-      SslContextFactory sslContextFactory = new SslContextFactory();
-      sslContextFactory.setKeyStoreResource(keystore);
-      sslContextFactory.setKeyStorePassword("wicket");
-      sslContextFactory.setKeyManagerPassword("wicket");
-
-      HttpConfiguration https_config = new HttpConfiguration(http_config);
-      https_config.addCustomizer(new SecureRequestCustomizer());
-
-      ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
-          sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config));
-      https.setPort(8443);
-      https.setIdleTimeout(500000);
-
-      server.addConnector(https);
-      System.out.println("SSL access to the examples has been enabled on port 8443");
-      System.out
-          .println("You can access the application using SSL on https://localhost:8443");
-      System.out.println();
-    }
-
-    WebAppContext bb = new WebAppContext();
-    bb.setServer(server);
-    bb.setContextPath("/");
-    bb.setWar("src/main/webapp");
-
-    server.setHandler(bb);
+    server.setHandler(webAppContext);
 
     MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
     MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);

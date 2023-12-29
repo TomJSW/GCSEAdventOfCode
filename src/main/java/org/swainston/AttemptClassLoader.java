@@ -12,3 +12,4 @@ public class AttemptClassLoader extends ClassLoader {
     return defineClass(name, bytes, 0, bytes.length);
   }
 }
+

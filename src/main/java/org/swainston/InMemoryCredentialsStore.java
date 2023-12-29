@@ -16,6 +16,7 @@ public class InMemoryCredentialsStore implements CredentialsStore {
   public boolean add(String email, String password) {
     if (!exists(email)) {
       credentialMap.put(email, password);
+      System.out.println(credentialMap.get(email) + " Is String: " + (credentialMap.get(email) instanceof String));
       return true;
     } else {
       return false;

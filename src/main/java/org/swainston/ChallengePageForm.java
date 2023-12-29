@@ -5,17 +5,29 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.swainston.test.UpperCaseChallengeImplTest;
-import org.swainston.ui.ChallengePage;
+import org.swainston.tests.UpperCaseChallenge.UpperCaseChallenge;
+import org.swainston.tests.UpperCaseChallenge.UpperCaseChallengeImplTest;
+import org.swainston.ui.challengepage.ChallengePage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
+/**
+ * Students' code is compiled and tests called on it within this class
+ */
 public class ChallengePageForm extends Form<Attempt> {
 
-  Challenge challenge;
-  String user;
-  AttemptsStore attemptsStore;
+  private final Challenge challenge;
+  private final String user;
+  private final AttemptsStore attemptsStore;
 
+  /**
+   * ChallengePageForm object
+   *
+   * @param user          the student
+   * @param challenge     the challenge the student is attempting
+   * @param attemptsStore the attempt store that holds the student's attempts
+   */
   public ChallengePageForm(String user, Challenge challenge, AttemptsStore attemptsStore) {
     super("form-submit-code");
 
@@ -29,31 +41,32 @@ public class ChallengePageForm extends Form<Attempt> {
         new PropertyModel<Attempt>(modelObject, "attempt")));
   }
 
-
+  /**
+   * The function that is run when the student presses the submit button
+   */
   @Override
   protected void onSubmit() {
+
     TextArea<Attempt> textArea = (TextArea<Attempt>) get("textarea-code");
-    IModel<Attempt> pm = textArea.getModel();
+    IModel<Attempt> textAreaModel = textArea.getModel();
 
-    Object attemptObject = pm.getObject();
-    String code = (String) attemptObject;
+    Object attemptObject = textAreaModel.getObject();
+    String studentCode = (String) attemptObject;
     Attempt attempt = new Attempt();
-    attempt.setAttempt(code);
+    attempt.setAttempt(studentCode);
 
-    Compiler.Result result = Compiler.checkCompiles(attempt);
+    final Compiler.Result result = Compiler.checkCompiles(attempt);
+
     if (result.isCompiles()) {
-      var bytes = result.getByteArrayOutputStream().toByteArray();
-      AttemptClassLoader attemptClassLoader = new AttemptClassLoader(bytes);
+      var byteArray = result.getByteArrayOutputStream().toByteArray();
+      AttemptClassLoader attemptClassLoader = new AttemptClassLoader(byteArray);
       try {
         Class<?> aClass = attemptClassLoader.findClass("org.swainston.tom");
-        Object object = aClass.newInstance();
-        System.out.println(object);
+        Object object = aClass.getDeclaredConstructor().newInstance();
 
-        UpperCaseChallenge ifc = UpperCaseChallenge.class.cast(object);
-
+        UpperCaseChallenge upperCaseChallenge = UpperCaseChallenge.class.cast(object);
         UpperCaseChallengeImplTest upperCaseChallengeImplTest = new UpperCaseChallengeImplTest();
-
-        upperCaseChallengeImplTest.setUpperCaseChallenge(ifc);
+        upperCaseChallengeImplTest.setUpperCaseChallenge(upperCaseChallenge);
 
         try {
           upperCaseChallengeImplTest.upperCaseConverter_all_num();
@@ -65,7 +78,8 @@ public class ChallengePageForm extends Form<Attempt> {
           result.setErrors(Collections.singletonList(e.toString()));
         }
 
-      } catch (InstantiationException | IllegalAccessException e) {
+      } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+               InvocationTargetException e) {
         throw new RuntimeException(e);
       }
     }

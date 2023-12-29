@@ -21,16 +21,14 @@ CREATE TABLE IF NOT EXISTS challenges
      PRIMARY KEY (email, id)
  );
 
-INSERT IGNORE INTO challenges
-values (1,
+INSERT IGNORE INTO challenges values (1,
         'Average speed check',
         'Create a program that calculates the average speed, in mph, between two
-speed cameras that are exactly 1 mile apart. You will be given
-two times in epoch in order of each camera.'
+         speed cameras that are exactly 1 mile apart. You will be given
+         two times in epoch in order of each camera.'
            , '1');
 
-INSERT IGNORE INTO challenges
-values (2,
+INSERT IGNORE INTO challenges values (2,
         'Code cracker',
         'You''ve forgotten your 4-digit phone password, however, you remember
 which numbers it included. You will be given these numbers and you must

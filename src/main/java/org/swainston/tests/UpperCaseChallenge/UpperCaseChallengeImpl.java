@@ -1,4 +1,4 @@
-package org.swainston;
+package org.swainston.tests.UpperCaseChallenge;
 
 public class UpperCaseChallengeImpl implements UpperCaseChallenge {
   @Override

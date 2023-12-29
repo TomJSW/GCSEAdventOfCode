@@ -5,6 +5,9 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
 import org.swainston.database.MySQLCredentialsStore;
 
+/**
+ * Used for verifying credentials for sessions
+ */
 public final class SignInSession extends AuthenticatedWebSession {
 
   // Credential store is set to desired store
@@ -42,7 +45,6 @@ public final class SignInSession extends AuthenticatedWebSession {
    */
   @Override
   public boolean authenticate(final String username, final String password) {
-
     if (credentialsStore.validate(username, password)) {
       this.username = username;
     } else {
@@ -78,6 +80,10 @@ public final class SignInSession extends AuthenticatedWebSession {
     }
   }
 
+  /**
+   *  Getter method for the username attribute
+   * @return the username
+   */
   public String getUser() {
     return username;
   }
