@@ -8,10 +8,9 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.value.ValueMap;
 import org.swainston.SignInSession;
-import org.swainston.ui.signup.SignUpPage;
 import org.swainston.ui.homepage.HomePage;
+import org.swainston.ui.signup.SignUpPage;
 
 import java.util.HashMap;
 import java.util.Map;

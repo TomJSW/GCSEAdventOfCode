@@ -11,7 +11,7 @@ import org.swainston.database.MySQLCredentialsStore;
 public final class SignInSession extends AuthenticatedWebSession {
 
   // Credential store is set to desired store
-  private final CredentialsStore credentialsStore = new InMemoryCredentialsStore();
+  private final CredentialsStore credentialsStore = new MySQLCredentialsStore();
 
   private String username;
 
