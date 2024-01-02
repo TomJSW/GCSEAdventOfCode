@@ -95,11 +95,11 @@ public class WicketApplication extends WebApplication {
                 return true;
               }
               // Session not signed in and page requires auth. Send them to auth, then redirect
-              // to original page
+              //  to the original page
               // continueToOriginalDestination when logged in.
               throw new RestartResponseAtInterceptPageException(SignInPage.class);
             }
-            // Page we're being directed to does not require authentication.
+            // The Page we're being directed to does not require authentication.
             return true;
           }
         });
@@ -111,7 +111,7 @@ public class WicketApplication extends WebApplication {
    * database.
    *
    * @throws SQLException if prepared statement fails to execute.
-   * @throws IOException  if  content within the SQL file is invalid.
+   * @throws IOException  if content within the SQL file is invalid.
    */
   private void initDB() throws SQLException, IOException {
     String setup;

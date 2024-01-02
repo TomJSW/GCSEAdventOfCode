@@ -2,6 +2,9 @@ package org.swainston;
 
 import java.io.Serializable;
 
+/**
+ * Class which holds information about a students given attempt
+ */
 public class Attempt implements Serializable {
 
   private int id;

@@ -20,8 +20,15 @@ public class MySQLCredentialsStore implements CredentialsStore {
   private static final String SQL_VALIDATE =
       "SELECT COUNT(*) FROM users WHERE email = ? AND password = ?;";
 
+  /**
+   * Adds a user into the database
+   * @param email the user's email
+   * @param password the user's password
+   * @return boolean of whether successful
+   */
   @Override
   public boolean add(String email, String password) {
+    // Check the user does not already exist in the database
     if (exists(email)) {
       return false;
     }
@@ -38,6 +45,12 @@ public class MySQLCredentialsStore implements CredentialsStore {
     return false;
   }
 
+
+  /**
+   * Check whether a user exists in the database
+   * @param email the email of the user you are querying
+   * @return boolean of whether the email can be matched to an account
+   */
   @Override
   public boolean exists(String email) {
 
@@ -55,11 +68,17 @@ public class MySQLCredentialsStore implements CredentialsStore {
       }
       return false;
     } catch (SQLException e) {
-      e.printStackTrace();
+      Logger.getLogger(WicketApplication.class.getName()).log(Level.SEVERE, e.getMessage());
       return false;
     }
   }
 
+  /**
+   * Validate whether a users credentials are correct
+   * @param email the email of the user
+   * @param password the user's password
+   * @return if the email and password exist in the database
+   */
   @Override
   public boolean validate(String email, String password) {
     try (var conn = WicketApplication.getConnection();
@@ -75,7 +94,7 @@ public class MySQLCredentialsStore implements CredentialsStore {
       }
       return false;
     } catch (SQLException e) {
-      e.printStackTrace();
+      Logger.getLogger(WicketApplication.class.getName()).log(Level.SEVERE, e.getMessage());
       return false;
     }
   }

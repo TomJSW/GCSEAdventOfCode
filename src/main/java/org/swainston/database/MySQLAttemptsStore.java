@@ -1,5 +1,10 @@
 package org.swainston.database;
 
+import org.swainston.Attempt;
+import org.swainston.AttemptsStore;
+import org.swainston.Challenge;
+import org.swainston.WicketApplication;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,27 +12,28 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.swainston.Attempt;
-import org.swainston.AttemptsStore;
-import org.swainston.Challenge;
-import org.swainston.WicketApplication;
 
 /**
  * Holds the method that inserts a users default information into the attempts table.
  */
 public class MySQLAttemptsStore implements AttemptsStore {
 
+  private static final String SET_ATTEMPT =
+      "UPDATE attempts SET attempt = ?" + " WHERE email = ? AND id = ?";
+  private static final String LOAD_DEFAULT = "INSERT INTO attempts VALUES(?,?,?)";
+  private static final String GET_ATTEMPT = "SELECT * FROM attempts WHERE email = ? AND id = ?";
+
   /**
-   * Loads a default template into the attempts table.
+   * Loads a default template into the attempt table.
    *
-   * @param email users email address
+   * @param email     users email address
    * @param challenge the challenge
    */
   public static void loadDefault(String email, Challenge challenge) {
-    String query = "INSERT INTO attempts VALUES(?,?,?)";
 
     try (Connection conn = WicketApplication.getConnection()) {
-      PreparedStatement stmt = conn.prepareStatement(query);
+
+      PreparedStatement stmt = conn.prepareStatement(LOAD_DEFAULT);
       stmt.setString(1, email);
       stmt.setInt(2, challenge.getId());
       stmt.setString(3, challenge.getSolutionTemplate());
@@ -36,31 +42,27 @@ public class MySQLAttemptsStore implements AttemptsStore {
     } catch (SQLException e) {
       Logger.getLogger(WicketApplication.class.getName()).log(Level.SEVERE, e.getMessage());
     }
-
   }
-
 
   /**
    * Gets an attempt.
    *
-   * @param email the students email
+   * @param email the student's email
    * @param id    the id of the attempt
-   * @return Optional of attempt
+   *
+   * @return Optional Attempt
    */
   @Override
   public Optional<Attempt> getAttempt(String email, int id) {
 
-    String query = "SELECT * FROM attempts WHERE email = ? AND id = ?";
 
     try (Connection conn = WicketApplication.getConnection();
-         PreparedStatement stmt =
-             conn.prepareStatement(query)) {
+         PreparedStatement stmt = conn.prepareStatement(GET_ATTEMPT)) {
       stmt.setString(1, email);
       stmt.setInt(2, id);
       ResultSet rs = stmt.executeQuery();
       if (rs.next()) {
         Attempt attempt = new Attempt();
-        //TODO - add validity checks
         attempt.setEmail(rs.getString(1));
         attempt.setId(rs.getInt(2));
         attempt.setAttempt(rs.getString(3));
@@ -70,18 +72,24 @@ public class MySQLAttemptsStore implements AttemptsStore {
       }
       return Optional.empty();
     } catch (SQLException e) {
-      // TODO - should this be WicketApplication.class or current class?
       Logger.getLogger(WicketApplication.class.getName()).log(Level.SEVERE, e.getMessage());
       throw new RuntimeException(e);
     }
   }
 
+  /**
+   * Adds a students attempt to the database
+   *
+   * @param email   the student's email
+   * @param id      the id of the attempt
+   * @param attempt the students attempt at the challenge
+   */
   @Override
   public void setAttempt(String email, int id, String attempt) {
-    String query = "UPDATE attempts SET attempt = ? WHERE email = ? AND id = ?";
 
     try (Connection conn = WicketApplication.getConnection()) {
-      PreparedStatement stmt = conn.prepareStatement(query);
+
+      PreparedStatement stmt = conn.prepareStatement(SET_ATTEMPT);
       stmt.setString(2, email);
       stmt.setInt(3, id);
       stmt.setString(1, attempt);
