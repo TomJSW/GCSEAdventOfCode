@@ -112,6 +112,7 @@
 <!--			<scope>test</scope>-->
 			<version>${jetty9.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jmx</artifactId>

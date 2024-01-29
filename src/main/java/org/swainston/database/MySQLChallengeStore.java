@@ -27,8 +27,7 @@ public final class MySQLChallengeStore implements ChallengeStore {
   public Optional<Challenge> getNextChallenge(String userEmail) {
 
     try (Connection conn = WicketApplication.getConnection();
-         PreparedStatement stmt =
-             conn.prepareStatement(GET_NEXT_CHALLENGE)) {
+         PreparedStatement stmt = conn.prepareStatement(GET_NEXT_CHALLENGE)) {
       stmt.setString(1, userEmail);
       ResultSet resultSet = stmt.executeQuery();
       if (resultSet.next()) {

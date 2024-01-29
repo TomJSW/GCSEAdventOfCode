@@ -74,7 +74,7 @@ public class MySQLCredentialsStore implements CredentialsStore {
   }
 
   /**
-   * Validate whether a users credentials are correct
+   * Validate whether a user's credentials are correct
    * @param email the email of the user
    * @param password the user's password
    * @return if the email and password exist in the database

@@ -103,7 +103,7 @@ public class SignUpPage extends WebPage {
       if (!emailPattern.matcher(username).matches()) {
         // Get the error message from the properties file associated with the Component
         String loginErrorInvalidUsername = getString("loginErrorInvalidUsername", null,
-            "Email address invalid.");
+            "The email address you have inputted is invalid! Please try again!");
         error(loginErrorInvalidUsername);
         return;
       }
@@ -115,7 +115,7 @@ public class SignUpPage extends WebPage {
         String invalidPassword = getString("loginErrorInvalidPassword", null,
             "Only letters, number, underscore in password");
         error(invalidPassword);
-        return; // break to ensure that no unnecessary session are created
+        return; // break to ensure that no unnecessary session is created
       }
 
       // Sign up, and return to the original destination page.
