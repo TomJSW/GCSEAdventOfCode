@@ -10,6 +10,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
+import org.apache.wicket.serialize.ISerializer;
 import org.swainston.database.Database;
 import org.swainston.ui.homepage.HomePage;
 import org.swainston.ui.signin.SignInPage;
@@ -103,6 +104,19 @@ public class WicketApplication extends WebApplication {
             return true;
           }
         });
+
+    // Turn off serialization, which causes lots of useless stack traces.
+    getFrameworkSettings().setSerializer(new ISerializer() {
+      @Override
+      public byte[] serialize(Object o) {
+        return new byte[0];
+      }
+
+      @Override
+      public Object deserialize(byte[] bytes) {
+        return null;
+      }
+    });
   }
 
 

@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Mysql thing.
- */
 public class MySQLCredentialsStore implements CredentialsStore {
 
   private static final String SQL_ADD = "INSERT INTO users VALUES(?, ?, ?)";

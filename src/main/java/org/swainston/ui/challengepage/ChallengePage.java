@@ -32,8 +32,8 @@ public class ChallengePage extends WebPage implements AuthenticatedWebPage {
   }
 
   /**
-   * Holds all the code required to run the page,
-   * process the students' code and return feedback to the student
+   * Holds all the code required to run the page, process the students' code and return feedback to
+   * the student
    */
   private void layout() {
     String user = getMySession().getUser();

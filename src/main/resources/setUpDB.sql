@@ -78,7 +78,7 @@ SO MY FRIENDS DON''T THINK I''M SHOUTING AT THEM.',
   /**
    * Description ....
    */
-  public static int upperCaseConverter(String upperCaseString) {
+  public static String upperCaseConverter(String upperCaseString) {
     // YOUR CODE HERE
   }
 }');

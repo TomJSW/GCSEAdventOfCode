@@ -4,7 +4,6 @@ import javax.tools.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * Taken from <a
  * href="https://docs.oracle.com/javase/8/docs/api/javax/tools/JavaCompiler.html">Javadoc</a>
  */
-public class Compiler implements Serializable {
+public class Compiler {
 
   public static Result checkCompiles(Attempt challenge) {
     /**
@@ -48,7 +47,7 @@ public class Compiler implements Serializable {
 
     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
     DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<>();
-    JavaSourceFromString source = new JavaSourceFromString("tom", submission); // TODO
+    JavaSourceFromString source = new JavaSourceFromString("Challenge8", submission); // TODO
     List<JavaSourceFromString> sources = new ArrayList<>();
     sources.add(source);
 

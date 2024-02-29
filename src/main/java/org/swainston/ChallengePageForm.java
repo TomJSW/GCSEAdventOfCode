@@ -52,16 +52,25 @@ public class ChallengePageForm extends Form<Attempt> {
 
     Object attemptObject = textAreaModel.getObject();
     String studentCode = (String) attemptObject;
+
+    String codeImplementingTest = studentCode.replace("class Challenge8",
+        "class Challenge8 implements " +
+            "org.swainston.tests.UpperCaseChallenge.UpperCaseChallenge");
     Attempt attempt = new Attempt();
-    attempt.setAttempt(studentCode);
+    attempt.setAttempt(codeImplementingTest);
+
+    System.out.println("[" + codeImplementingTest + "]");
 
     final Compiler.Result result = Compiler.checkCompiles(attempt);
 
     if (result.isCompiles()) {
       var byteArray = result.getByteArrayOutputStream().toByteArray();
+
+
       AttemptClassLoader attemptClassLoader = new AttemptClassLoader(byteArray);
       try {
-        Class<?> aClass = attemptClassLoader.findClass("org.swainston.tom");
+        String source_name = "org.swainston.Challenge8";
+        Class<?> aClass = attemptClassLoader.findClass(source_name);
         Object object = aClass.getDeclaredConstructor().newInstance();
 
         UpperCaseChallenge upperCaseChallenge = UpperCaseChallenge.class.cast(object);
@@ -84,6 +93,9 @@ public class ChallengePageForm extends Form<Attempt> {
       }
     }
 
+    // Store the original code that the student submitted, not the code modified to implement the
+    // test methods.
+    result.setSubmission(studentCode);
     attemptsStore.setAttempt(user, challenge.getId(), result.toString());
 
     setResponsePage(ChallengePage.class);
