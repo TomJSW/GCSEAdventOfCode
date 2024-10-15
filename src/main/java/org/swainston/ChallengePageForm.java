@@ -66,7 +66,6 @@ public class ChallengePageForm extends Form<Attempt> {
     if (result.isCompiles()) {
       var byteArray = result.getByteArrayOutputStream().toByteArray();
 
-
       AttemptClassLoader attemptClassLoader = new AttemptClassLoader(byteArray);
       try {
         String source_name = "org.swainston.Challenge8";

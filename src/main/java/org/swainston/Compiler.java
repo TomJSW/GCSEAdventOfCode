@@ -31,8 +31,8 @@ public class Compiler {
        */
       JavaSourceFromString(String name, String code) {
         super(URI.create(
-                String.format("string:///%s%s", name.replace('.', '/'), Kind.SOURCE.extension)),
-            Kind.SOURCE);
+                        String.format("string:///%s%s", name.replace('.', '/'), Kind.SOURCE.extension)),
+                Kind.SOURCE);
         this.code = code;
       }
 
@@ -57,29 +57,28 @@ public class Compiler {
     JavaFileManager fileManager = new ForwardingJavaFileManager(mgr) {
       @Override
       public JavaFileObject getJavaFileForOutput(Location location, String className,
-                                                 JavaFileObject.Kind kind, FileObject sibling)
-          throws IOException {
+                                                 JavaFileObject.Kind kind, FileObject sibling) {
         JavaFileObject simpleJavaFileObject =
-            new SimpleJavaFileObject(URI.create(className), kind) {
-              @Override
-              public OutputStream openOutputStream() {
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                result.setByteArrayOutputStream(byteArrayOutputStream);
-                return byteArrayOutputStream;
-              }
-            };
+                new SimpleJavaFileObject(URI.create(className), kind) {
+                  @Override
+                  public OutputStream openOutputStream() {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    result.setByteArrayOutputStream(byteArrayOutputStream);
+                    return byteArrayOutputStream;
+                  }
+                };
         return simpleJavaFileObject;
       }
     };
 
 
     JavaCompiler.CompilationTask task =
-        compiler.getTask(null, fileManager, diagnosticCollector, options, null, sources);
+            compiler.getTask(null, fileManager, diagnosticCollector, options, null, sources);
     task.call();
     List<String> errors = new ArrayList<>();
     for (Diagnostic<? extends JavaFileObject> diagnostic : diagnosticCollector.getDiagnostics()) {
       errors.add(String.format("Line: %d, %s in %s", diagnostic.getLineNumber(),
-          diagnostic.getMessage(null), diagnostic.getSource().getName()));
+              diagnostic.getMessage(null), diagnostic.getSource().getName()));
     }
 
     result.setCompiles(errors.isEmpty());
